@@ -1,0 +1,26 @@
+name: 🔮 MAGIC ACTION
+
+on:
+  push:
+    branches: [ "lec" ]
+
+jobs:
+  magic:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ✨ Print Magic Banner
+        run: |
+          echo "███╗   ███╗ █████╗  ██████╗ ██╗ ██████╗"
+          echo "████╗ ████║██╔══██╗██╔════╝ ██║██╔════╝"
+          echo "██╔████╔██║███████║██║  ███╗██║██║     "
+          echo "██║╚██╔╝██║██╔══██║██║   ██║██║██║     "
+          echo "██║ ╚═╝ ██║██║  ██║╚██████╔╝██║╚██████╗"
+          echo "╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝ ╚═════╝"
+          echo ""
+          echo "✨ YOUR PIPELINE IS MAGIC ✨"
+
+      - name: 🎩 Run Magic Command
+        run: |
+          echo "Abracadabra 🪄"
+          echo "Deploying your code like a wizard..."
