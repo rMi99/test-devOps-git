@@ -1,15 +1,26 @@
-name: 🌐 IP INFO CHECK
+name: 🚀 Deploy via SSH
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  ip-check:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🔎 Get Public IP Info
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🔐 Setup SSH
         run: |
-          echo "🌍 Fetching runner IP info..."
-          curl ipinfo.io
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: 🚀 Run Deploy Script on Server
+        run: |
+          ssh ubuntu@${{ secrets.EC2_HOST }} \
+          "bash /var/www/test-devOps-git/deploy.sh"
