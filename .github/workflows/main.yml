@@ -1,27 +1,18 @@
-name: 🚀 Deploy via SSH
-
+name: Deploy
 on:
-  push:
+ push:  
     branches:
-      - lec
-
+     - dev
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: 📥 Checkout Code
-        uses: actions/checkout@v4
-
-      # - name: 🔐 Setup SSH
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
-      #     chmod 600 ~/.ssh/id_rsa
-      #     ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-
-      - name: 🚀 Run Deploy Script on Server
-        run: |
-          ssh ubuntu@${{ secrets.EC2_HOST }} \
-          "bash /var/www/test-devOps-git/deploy.sh"
-          "ls"
+ deploy:
+   runs-on: ubuntu-latest
+   steps:
+     - uses: actions/checkout@v3
+     - name: Deploy to server
+       uses: appleboy/ssh-action@master
+       with:
+         host: ${{ secrets.EC2_HOST }}
+         username: ubuntu
+         port: 22
+         key: ${{ secrets.EC2_KEY }}
+         script: "bash /var/www/test-devOps-git/deploy.sh" 
